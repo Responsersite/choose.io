@@ -231,7 +231,7 @@ section {
 }
 
 .modal-content {
-    background-color: #222; /* Darker background for modal */
+    background-color:black; /* Darker background for modal */
     margin: 10% auto; /* 10% from the top and centered */
     padding: 20px; /* Padding inside the modal */
     border-radius: 10px; /* Rounded corners */
@@ -266,7 +266,7 @@ input[type="text"], input[type="password"] {
     margin: 10px 0; /* Space between inputs */
     border: 1px solid #444; /* Border color */
     border-radius: 5px; /* Rounded corners */
-    background: #333; /* Background for inputs */
+    background:#444; /* Background for inputs */
     color: #fff; /* Text color */
 }
 
@@ -311,7 +311,6 @@ input[type="text"]::placeholder, input[type="password"]::placeholder {
 .instagram{
     width: 70px;
     height: 60px;
-    border-radius:12px;
-    margin-left: 125px;
+    margin-left: 135px;
 }
 
