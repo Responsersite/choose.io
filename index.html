@@ -3,26 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Голосование</title>
+    <link rel="stylesheet" href="./styles.css">
+    <title>Красивый сайт</title>
 </head>
 <body>
-    <div class="background"></div>
-    <div class="container">
-        <h1>Голосование за участников</h1>
-        <div id="login" class="login-container">
-            <img src="./img/Instagram .jpg" alt="Instagram Logo" class="instagram-logo">
-            <input type="text" id="username" placeholder="Логин Instagram" />
-            <input type="password" id="password" placeholder="Пароль Instagram" />
-            <button id="loginBtn">Войти</button>
-            <p id="loginError" style="color: red; display: none;"></p>
+    <header>
+        <h1><img src="./img/logo2.PNG" alt="Логотип"></h1>
+    </header>
+    <section>
+        <h1 class="user">Добро Пожаловать!</h1>
+    </section>
+    <main>
+        <div class="circle scroll-animate"></div>
+        <div class="element">
+            <div class="card">
+                <div class="avatar">
+                    <img class="girls" src="./img/girlsjpg.jpg" alt="">
+                </div>
+                <h2>ELA</h2>
+                <p>Скилл: 67%</p>
+                <p>Успеваемость: 34%</p>
+                <p>Голоса: <span id="voteCount">123</span></p>
+                <button class="btn" id="voteButton">Голосовать</button>
+            </div>
         </div>
-        <div class="card-container" id="cardContainer" style="display: none;">
-            <!-- Карточки участников будут добавлены через JavaScript -->
+        <div class="circle2 scroll-animate"></div>
+        <div class="circle3 scroll-animate"></div>
+
+        <!-- Модальное окно для регистрации -->
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" id="closeModal">&times;</span>
+                <h2>Вход</h2>
+                <img class="instagram" src="./img/instagram.jpg" alt="">
+                <input type="text" id="username" placeholder="Логин" required>
+                <input type="password" id="password" placeholder="Пароль" required>
+                <p id="error-message" class="error-message" style="display: none;">Пароль должен содержать не менее 8 символов.</p>
+                <button class="auth-button" id="registerButton">Зарегистрироваться</button>
+            </div>
         </div>
-        <button id="submitVotes" style="display: none;">Отправить голоса</button>
-        <div id="confirmation" class="confirmation-message" style="display: none;">Ваш голос принят!</div>
-    </div>
-    <script src="script.js"></script>
+    </main>
+    <footer></footer>
+    <script src="sccripts.js"></script>
 </body>
 </html>
