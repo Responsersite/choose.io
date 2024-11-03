@@ -89,7 +89,7 @@ section {
 }
 
 .btn:hover {
-    background: green;
+    background: red;
 }
 
 .circle, .circle2, .circle3 {
