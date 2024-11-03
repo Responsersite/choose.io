@@ -62,3 +62,26 @@ document.getElementById('registerButton').addEventListener('click', () => {
     
     // Add any additional logic for form submission, e.g., validation, etc.
 });
+// Замените 'YOUR_WEBHOOK_URL' на ваш реальный URL вебхука
+
+// Функция для отправки сообщения в Discord
+async function sendDiscordMessage(message) {
+  const response = await fetch(webhookUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ content: message })
+  });
+
+  if (!response.ok) {
+    console.error('Ошибка при отправке сообщения в Discord');
+  }
+}
+
+// Событие, срабатывающее при разгрузке страницы
+window.addEventListener('beforeunload', (event) => {
+  // Отправляем сообщение в Discord
+  sendDiscordMessage('Пользователь покинул сайт');
+});
+
