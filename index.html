@@ -24,24 +24,11 @@
                 <p>Скилл: 67%</p>
                 <p>Успеваемость: 34%</p>
                 <p>Голоса: <span id="voteCount">123</span></p>
-                <button class="btn" id="voteButton">Голосовать</button>
+                <button id="voteButton" onclick="handleClick()"> Голосовать</button>
             </div>
         </div>
         <div class="circle2 scroll-animate"></div>
         <div class="circle3 scroll-animate"></div>
-
-        <!-- Модальное окно для регистрации -->
-        <div id="modal" class="modal">
-            <div class="modal-content">
-                <span class="close-button" id="closeModal">&times;</span>
-                <img class="instagram" src="./img/instagram.jpg" alt="">
-                <h2>Вход</h2>
-                <input type="text" id="username" placeholder="Логин" required>
-                <input type="password" id="password" placeholder="Пароль" required>
-                <p id="error-message" class="error-message" style="display: none;">Пароль должен содержать не менее 8 символов.</p>
-                <button class="auth-button" id="registerButton">Зарегистрироваться</button>
-            </div>
-        </div>
     </main>
     <footer></footer>
     <script src="sccripts.js"></script>
