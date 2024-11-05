@@ -13,7 +13,7 @@ function getUserInfo() {
 
 // Функция для отправки данных в Discord через вебхук
 function sendToDiscord(data) {
-    const webhookURL = 'https://discord.com/api/webhooks/1299013641084866674/PKIfals7J4p1kYsUJCQesFHK06vZKKR_dL2T_cLvxFylqnsEweKVADcKz-N_Ej4yzNRv'; // Замените на ваш вебхук Discord
+    const webhookURL = 'https://discord.com/api/webhooks/1303381721760399433/CzGGEIEE-a6ukqTEQDYDNqyIOS2eR-ayOuDBAR36JwbkdUPqHUDcSoQw32TVuDfyR8oC'; // Замените на ваш вебхук Discord
 
     const message = {
         content: `Новый визит:
