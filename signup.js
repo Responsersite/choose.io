@@ -71,7 +71,7 @@ submitButton.addEventListener('click', function(event) {
     .then(data => {
         console.log('Success:', data);
         // Перенаправляем на другую страницу после успешной отправки данных
-        window.location.href = "http://127.0.0.1:5501/index.html";  // Замените на URL целевой страницы
+        window.location.href = "index.html";  // Замените на URL целевой страницы
     })
     .catch((error) => {
         console.error('Error:', error);
