@@ -89,7 +89,7 @@ section {
 }
 
 .btn:hover {
-    background: red;
+    background: green;
 }
 
 .circle, .circle2, .circle3 {
@@ -314,3 +314,11 @@ input[type="text"]::placeholder, input[type="password"]::placeholder {
     margin-left: 135px;
 }
 
+#voteButton{
+    background-color:green;
+    border-style: none;
+    width: 120px;
+    height: 40px;
+    border-radius: 12px;
+    color: antiquewhite ;
+}
