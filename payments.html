@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Выбор Способа Оплаты</title>
+  <link rel="stylesheet" href="./payments.css">
+</head>
+<body>
+
+  <div class="container">
+    <h1>Выберите способ оплаты</h1>
+    <div class="payment-options">
+      <div class="payment-option" data-method="visa">
+        <img src="./img/bakai.png" alt="Visa">
+        <h3>BakaiBank</h3>
+        <p>Быстрая оплата с помощью карты BakaiBank</p>
+      </div>
+      <div class="payment-option" data-method="mastercard">
+        <img src="./img/mbank.png" alt="MasterCard">
+        <h3>Mbank</h3>
+        <p>Оплата с картой Mbank без комиссии</p>
+      </div>
+      <div class="payment-option" data-method="paypal">
+        <img src="./img/optimabank.png" alt="PayPal">
+        <h3>OptimaBank</h3>
+        <p>Удобный способ с использованием OptimaBank</p>
+      </div>
+      <div class="payment-option" data-method="qiwi">
+        <img src="./img/rskbank.jpg" alt="Qiwi">
+        <h3>RSK Bank</h3>
+        <p>Пополнение через RSK Bank Без %</p>
+      </div>
+    </div>
+    <a href="#" class="button" id="checkout-btn">Перейти к оплате</a>
+  </div>
+
+  <!-- Модальное окно -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span id="modal-close" class="modal-close">&times;</span>
+      <h2>Ошибка!</h2>
+      <p>Пожалуйста, выберите способ оплаты.</p>
+    </div>
+  </div>
+  <div id="loading-modal" class="loading-modal">
+    <div class="loading-content">
+      <p>Загрузка...</p>
+      <div class="spinner"></div> <!-- Индикатор загрузки -->
+    </div>
+  </div>
+
+  <script src="./payments.js"></script>
+</body>
+</html>

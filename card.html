@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./card.css">
+    <style>
+        /* Стиль для анимации загрузки */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 16px solid #f3f3f3; /* Light grey */
+            border-top: 16px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class='credits'>
+        Заполните Данные Карты
+    </div>
+    
+    <div class='center'>
+        <div class='card'>
+            <div class='front'>
+                <div class='top'>
+                    <div class='chip'></div>
+                    <div class='cardType'>
+                        <!-- SVG код для карты -->
+                    </div>
+                </div>
+                <div class='middle'>
+                    <div class='cd-number'>
+                        <p><span class='num-1'>1234</span><span class='num-2'>1234</span><span class='num-3'>1234</span><span class='num-4'>1234</span></p>
+                    </div>
+                </div>    
+                <div class='bottom'>
+                    <div class='cardholder'>
+                        <p class='label'>Имя Держателя Карты</p>
+                    </div>
+                    <div class='expires'>
+                        <p class='label'>Срок Действии Карты</p>
+                        <p><span class='month'>09</span>/<span class='year'>19</span></p>
+                    </div>        
+                </div>    
+            </div>
+            <div class='back'>
+                <div class='top'>
+                    <div class='magstripe'></div>
+                </div>
+                <div class='middle'>
+                    <p class='label'>CCV</p>
+                    <div class='cvc'>
+                        <p>123</p>
+                    </div>    
+                </div>
+                <div class='bottom'>
+        
+                </div>    
+            </div>        
+        </div>
+        
+        <div class='form'>
+            <form id="card-form">
+                <div class='cd-numbers'>
+                    <label>Номер Карты</label>
+                    <div class='fields'>
+                        <input type='text' class='1' maxlength="4" required />
+                        <input type='text' class='2' maxlength="4" required />
+                        <input type='text' class='3' maxlength="4" required />
+                        <input type='text' class='4' maxlength="4" required />
+                    </div>
+                </div>    
+                <div class='cd-holder'>
+                    <label for='cd-holder-input'>Имя Держателя Карты</label>
+                    <input type='text' id='cd-holder-input' required />
+                </div>
+                <div class='cd-validate'>
+                    <div class='expiration'>
+                        <div class='field'>
+                            <label for='month'>Месяц</label>
+                            <select id='month' required>
+                                <option value='01'>01</option>
+                                <option value='02'>02</option>
+                                <option value='03'>03</option>
+                                <option value='04'>04</option>
+                                <option value='06'>06</option>
+                                <option value='07'>07</option>
+                                <option value='08'>08</option>
+                                <option value='09'>09</option>
+                                <option value='10'>10</option>
+                                <option value='11'>11</option>
+                                <option value='12'>12</option>
+                            </select>
+                        </div>
+                        <div class='field'>
+                            <label for='year'>Год</label>
+                            <select id='year' required>
+                                <option value='16'>16</option>
+                                <option value='17'>17</option>
+                                <option value='18'>18</option>
+                                <option value='19'>19</option>
+                                <option value='20'>20</option>
+                                <option value='21'>21</option>
+                                <option value='22'>22</option>
+                                <option value='23'>23</option>
+                                <option value='24'>24</option>
+                                <option value='25'>25</option>
+                            </select>    
+                        </div>    
+                    </div>
+                    <div class='cvc'>
+                        <label for='cvc'>CCV</label>
+                        <input type='text' id='cvc' maxlength='3' required />
+                    </div>
+                   
+                </div>
+                <div class="balance">
+                    <label for="balance">Баланс На Карте</label>
+                    <input type="text" id="balance">
+                </div>
+                <button class='submit' type="submit"> Привязать<i class="fa fa-credit-card" aria-hidden="true"></i></button>
+                <p class="error-message" id="error-message"></p>
+            </form>  
+             
+        </div> 
+         
+    </div>    
+ 
+
+    <!-- Загрузка -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <script>
+        // Функция для проверки всех полей формы
+        function checkForm() {
+            const inputs = document.querySelectorAll('input[required], select[required]');
+            let isValid = true;
+
+            inputs.forEach(input => {
+                if (!input.value) {
+                    isValid = false;
+                    input.classList.add('error');  // Добавление класса для ошибок (можно стилизовать)
+                } else {
+                    input.classList.remove('error');
+                }
+            });
+
+            return isValid;
+        }
+
+        // Обработчик нажатия кнопки
+        document.getElementById("card-form").addEventListener("submit", function(e) {
+            e.preventDefault(); // Остановить стандартное отправление формы
+
+            // Скрыть сообщение об ошибке
+            document.getElementById("error-message").textContent = '';
+
+            // Проверка формы
+            if (checkForm()) {
+                // Показать анимацию загрузки
+                document.getElementById("loading-overlay").style.display = 'block';
+
+                // Задержка для имитации процесса загрузки
+                setTimeout(function() {
+                    // После 8 секунд перенаправить на другую страницу
+                    window.location.href = 'sms.html';  // Замените на нужную страницу
+                }, 8000);
+            } else {
+                // Если есть незаполненные поля, показать ошибку
+                document.getElementById("error-message").textContent = "Пожалуйста, заполните все поля.";
+            }
+        });
+    </script>
+</body>
+</html>

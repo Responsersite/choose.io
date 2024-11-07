@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Верификация по SMS</title>
+    <link rel="stylesheet" href="sms.css">
+</head>
+<body>
+    <div class="container">
+        <div class="verification-box">
+            <h2>Введите код из SMS</h2>
+
+            <div class="timer" id="timer">05:00</div>
+
+            <div class="verification-form">
+                <input type="text" id="code-input" maxlength="6" placeholder="Введите код">
+                <button id="verify-btn" disabled>Подтвердить</button>
+            </div>
+
+            <p id="error-message" class="error-message">Пожалуйста, введите корректный код.</p>
+
+            <!-- Индикатор загрузки (по умолчанию скрыт) -->
+            <div id="loading" class="loading" style="display: none;">
+                <div class="loader"></div>
+                <p>Подождите Идет проверка данных.....</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="sms.js"></script>
+</body>
+</html>
