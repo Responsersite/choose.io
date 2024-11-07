@@ -313,10 +313,6 @@ input[type="text"]::placeholder, input[type="password"]::placeholder {
     height: 60px;
     margin-left: 135px;
 }
-
-#voteButton{
-    background-color:green;
-
     #voteButton{
     background-color:green;
     border-style: none;
@@ -333,10 +329,4 @@ input[type="text"]::placeholder, input[type="password"]::placeholder {
     color: white;
     font-family: sans-serif;
     border-radius:10px;
-}
-    border-style: none;
-    width: 120px;
-    height: 40px;
-    border-radius: 12px;
-    color: antiquewhite ;
-}
+
