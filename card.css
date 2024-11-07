@@ -6,10 +6,16 @@
 body {
     font-family: 'Ubuntu', sans-serif;
 }
-
 input, select, textarea {
     font-family: 'Ubuntu', sans-serif;
 }
+
+/* Новый стиль для всех input, чтобы они имели черные края */
+input, select, textarea {
+    border: 1px solid black;  /* Черные края для всех input */
+}
+
+/* Остальной CSS остаётся неизменным */
 
 .credits {
     padding: 20px;
