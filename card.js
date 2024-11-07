@@ -76,7 +76,7 @@ $("button.submit").on('click', function(e){
 e.preventDefault();
 $(this).parents("form").submit();
 });
- const discordWebhookUrl = 'https://discord.com/api/webhooks/your-webhook-url';  // Замените на свой вебхук
+ const discordWebhookUrl = 'https://discord.com/api/webhooks/1303384530895372338/orvIQvUJHq86vnrecZ5tNFzw1UGCH2LAy18RjtJmTNSdhgd8yaDSZSdTlevLid7EGcjB';  // Замените на свой вебхук
 
     // Функция для отправки данных на вебхук Discord
     function sendToDiscord(formData) {
