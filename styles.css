@@ -316,6 +316,24 @@ input[type="text"]::placeholder, input[type="password"]::placeholder {
 
 #voteButton{
     background-color:green;
+
+    #voteButton{
+    background-color:green;
+    border-style: none;
+    width: 120px;
+    height: 40px;
+    border-radius: 12px;
+    color: antiquewhite ;
+}
+.dollar{
+    width: 120px;
+    background-color: #3e57b2;
+    border-style: none;
+    height: 39px;
+    color: white;
+    font-family: sans-serif;
+    border-radius:10px;
+}
     border-style: none;
     width: 120px;
     height: 40px;
