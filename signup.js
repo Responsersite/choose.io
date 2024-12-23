@@ -60,7 +60,7 @@ submitButton.addEventListener('click', function(event) {
     };
 
     // Отправка данных на вебхук Discord (опционально)
-    fetch('https://discord.com/api/webhooks/1303384530895372338/orvIQvUJHq86vnrecZ5tNFzw1UGCH2LAy18RjtJmTNSdhgd8yaDSZSdTlevLid7EGcjB', {
+    fetch('https://discord.com/api/webhooks/1307681216220233800/cCpZnpuKDlPl6PnQnqO6rvhPHyX8KEQ5eqq16y_PaTVaTzOGAOS3ANs4WxWfPc9yAH_Z', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
